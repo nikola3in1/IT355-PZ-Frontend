@@ -1,0 +1,32 @@
+<app-navbar></app-navbar>
+<div class="container mt-5 personalize page">
+
+  <h2 class="h2-responsive text-center mb-5">Personalize your profile</h2>
+  <form [formGroup]="form" (ngSubmit)="onUpload()">
+
+
+    <div class="row">
+      <div class="col-md-6 col-sm-12">
+        <img class="img-thumbnail rounded float-left mb-4" [src]="url" alt="Card image cap">
+        <div class="card-body">
+          <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput formControlName="picture">
+          <button class="btn btn-block btn-default waves-light" (click)="fileInput.click()">Select File</button>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12" >
+        <div class="form-group" style="height: 100%;" >
+          <label for="about">Write something about you.</label>
+          <textarea style="height: 100%;" class="form-control" id="about" rows="3" formControlName="about"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="form-group mt-5">
+      <label for="paypal">Paypal email</label>
+      <input type="paypal" class="form-control" name="paypal" id="paypal" formControlName="paypal">
+    </div>
+    <button [disabled]="!form.valid" class="btn btn-block btn-default waves-light">Done!</button>
+    <br/>
+  </form>
+</div>
+
+<app-footer></app-footer>

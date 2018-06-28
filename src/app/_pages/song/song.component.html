@@ -1,0 +1,35 @@
+<app-navbar></app-navbar>
+<div *ngIf="!isDeleted" class="container mt-4 page">
+    <h2>Song "{{songName}}" by {{creator}}</h2>
+    <div *ngFor="let song of songs" class="card card-body mb-1 mt-4">
+        <app-audio (deleted)="deleted()" [song]="song"></app-audio>
+    </div>
+    <div class="mt-2 float-right">
+        <app-paypal [nrSales]="nrSales"
+        [duration]="duration"
+        [price]="price"
+        [creator]="creator"
+        [genre]="genre"
+        [name]="songName"
+        ></app-paypal>
+    </div>
+    <h2 class="mt-4">Details</h2>
+    <div class="ml-4">
+        <p>Nubmer of sales: {{nrSales}}</p>
+        <p>Duration: {{duration}}</p>
+        <p>Price: {{price|currency}}</p>
+        <p>Creator: {{creator}}</p>
+        <p>Genre: {{genre | titlecase}}</p>
+    </div>
+    <h3 class="mt-4">About this song</h3>
+    <blockquote class="blockquote">
+        <p class="mb-0">{{about}}</p>
+        <footer class="blockquote-footer">{{creator}}
+            <cite title="Source Title">MusicBox content creator</cite>
+        </footer>
+    </blockquote>
+</div>
+<div class="conteiner text-center page mt-5">
+    <h1 *ngIf="isDeleted" class="text-center animated fadeIn">Sorry this content isn't available.</h1>
+</div>
+<app-footer></app-footer>

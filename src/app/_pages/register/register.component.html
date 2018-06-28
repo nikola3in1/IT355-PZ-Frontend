@@ -1,0 +1,47 @@
+<app-navbar></app-navbar>
+
+<div class="container mt-5 personalize page">
+  <h2 class="h2-responsive text-center">Sign Up For A Free Account</h2>
+  <p class="text-center">Already a member?
+    <a>
+      <u>Sign in Here</u>
+    </a>
+  </p>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" class="form-control" name="username" id="username" formControlName="username">
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="text" class="form-control" name="email" id="email" formControlName="email">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" name="password" id="password" formControlName="password">
+    </div>
+    <div class="form-group">
+      <label for="rptpassword">Repeat Password</label>
+      <input type="password" class="form-control" name="rptpassword" id="rptpassword" formControlName="rptpassword" >
+    </div>
+    
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="firstname">Firstname</label>
+            <input type="firstname" class="form-control" name="firstname" id="firstname" formControlName="fname" >
+          </div>
+          <div class="form-group col-md-6">
+            <label for="lastname">Lastname</label>
+            <input type="lastname" class="form-control" name="lastname" id="lastname" formControlName="lname">
+          </div>
+      </div>
+
+    <div class="text-center">
+      <input type="submit" [disabled]="!form.valid" class="btn btn-block btn-default waves-light" mdbWavesEffect value="Sign Up">
+    </div>
+  </form>
+</div>
+<br/>
+<br/>
+<app-footer></app-footer>

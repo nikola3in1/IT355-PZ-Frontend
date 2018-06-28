@@ -1,0 +1,13 @@
+<div>
+  <app-navbar></app-navbar>
+  <div class="container pt-4 page">
+    <div *ngIf="gotSongs">
+    <h1> {{genreName | titlecase}}</h1>
+      <div *ngFor="let song of songs" class="card card-body mb-2">
+        <app-audio [song]="song"></app-audio>
+      </div>
+    </div>
+    <h1 *ngIf="!gotSongs" class="mt-4 text-center animated fadeIn">Currently there are no songs for this genre, sorry.</h1>
+  </div>
+  <app-footer></app-footer>
+</div>

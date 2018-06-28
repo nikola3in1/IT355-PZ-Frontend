@@ -1,0 +1,92 @@
+<div class="container">
+  <br/>
+  <br/>
+  <h2 class="h2-responsive text-center">Most featured genres</h2>
+  <br/>
+
+  <div class="row no-gutters">
+    <div class="col-md-4 col-sm-6 col-6">
+      <a routerLinkActive="active" routerLink='genre/soul&rnb'>
+
+        <div class="view overlay">
+          <img src="../../assets/genres/rnb.jpg" class="img-fluid" alt="">
+          <div class="mask flex-center rgba-orange-strong">
+            <p class="white-text">Soul & RNB</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-4 col-sm-6 col-6">
+      <a routerLinkActive="active" routerLink='genre/corporate'>
+
+        <div class="view overlay">
+          <img src="../../assets/genres/corporate.jpg" class="img-fluid" alt="">
+          <div class="mask flex-center rgba-teal-strong">
+            <p class="white-text">Corporate</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-4 col-sm-6 col-6">
+      <a routerLinkActive="active" routerLink='genre/eletronica'>
+
+        <div class="view overlay">
+          <img src="../../assets/genres/eletronica.jpg" class="img-fluid" alt="">
+          <div class="mask flex-center rgba-indigo-strong">
+            <p class="white-text">Electronica</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-4 col-sm-6 col-6">
+      <a routerLinkActive="active" routerLink='genre/pop'>
+        <div class="view overlay">
+          <img src="../../assets/genres/pop.jpg" class="img-fluid" alt="">
+          <div class="mask flex-center rgba-lime-strong">
+            <p class="white-text">Pop</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-4 col-sm-6 col-6">
+      <a routerLinkActive="active" routerLink='genre/classical'>
+        <div class="view overlay">
+          <img src="../../assets/genres/classical.jpg" class="img-fluid" alt="">
+          <div class="mask flex-center rgba-cyan-strong">
+            <p class="white-text">Classical</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-4 col-sm-6 col-6">
+      <a routerLinkActive="active" routerLink='genre/jazz'>
+        <div class="view overlay">
+          <img src="../../assets/genres/jazz.jpg" class="img-fluid" alt="">
+          <div class="mask flex-center rgba-purple-light">
+            <p class="white-text">Jazz</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<div class="container text-center">
+  <br/>
+  <br/>
+  <h2 class="h2-responsive text-center">Other genres</h2>
+  <hr/>
+  <br/>
+
+  <div class="row">
+    <div *ngFor="let genre of genreList" class="col-sm-6 col-6 col-md-3">
+      <h5 class="h5-responsive txt">
+        <a routerLinkActive="active" routerLink='genre/{{genre}}'>{{genre}}</a>
+      </h5>
+    </div>
+  </div>
+  <br/>
+  <hr/>
+  <br/>
+</div>

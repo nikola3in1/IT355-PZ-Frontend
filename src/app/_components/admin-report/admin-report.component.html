@@ -1,0 +1,33 @@
+<div class="container">
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Reason</th>
+        <th scope="col">Creator</th>
+        <th scope="col">Song</th>
+        <th scope="col">Reported by</th>
+        <th scope="col">Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let report of reports">
+        <th scope="row">{{report.id}}</th>
+        <td>{{report.reason}}</td>
+        <td>{{report.creator}}</td>
+        <td>{{report.song}}</td>
+        <td>{{report.reportedBy}}</td>
+        <td>
+          <a (click)="open(report.creator,report.song)">Link</a>
+        </td>
+        <td (click)="deleteReport(report.id)">
+          <a>
+            <i class="fa fa-times fa-lg" aria-hidden="true"></i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

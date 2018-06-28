@@ -1,0 +1,12 @@
+<div class="container mx-auto">
+    <form [formGroup]="form" (ngSubmit)="search()">
+        <div class="input-group col-md-12">
+          <input class="form-control py-2" type="search" formControlName="input" value="search" id="example-search-input">
+          <span class="input-group-append">
+            <button class="btn btn-primary waves-light" type="submit" mdbWavesEffect>
+              <i class="fa fa-search"></i>
+            </button>
+          </span>
+        </div>      
+  </form>
+</div>

@@ -1,0 +1,128 @@
+<a *ngIf="!isMine && !isAdmin" class="card-link" title="">
+    <i *ngIf="isLiked" (click)="like()" class="fa fa-heart like fa-lg  float-right ml-1" [ngStyle]='likeStyle'></i>
+    <i *ngIf="!isLiked " (click)="like()" class="fa fa-heart-o fa-lg  float-right ml-1"></i>
+    <i *ngIf="isCreator" (click)="reportSong.show()" class="fa fa-exclamation-circle fa-lg float-right" style="color:#2E2E2E"
+        aria-hidden="true"></i>
+</a>
+<a *ngIf="isAdmin" class="card-link" title="">
+    <i class="fa fa-trash fa-lg float-right" style="color:#2E2E2E" (click)="removeSong.show()" aria-hidden="true"></i>
+</a>
+<a *ngIf="isMine" class="card-link" title="">
+    <i class="fa fa-trash fa-lg float-right" style="color:#2E2E2E" (click)="removeSong.show()" aria-hidden="true"></i>
+</a>
+
+
+<h4 class="card-title pb-1">
+    <a routerLinkActive="active" [routerLink]="['/creator',song.creator,song.name]"> {{song.name}}</a>
+</h4>
+
+<!-- Container -->
+<div *ngIf="!isLoaded">
+    <div class="loader mx-auto mt-5"></div>
+</div>
+<div attr.id='{{id}}'></div>
+
+
+<!-- Player ctrls and info -->
+<div class="row pt-2">
+    <!-- Big screen -->
+    <div *ngIf="!toggleCtrls" class="col-md-4">
+        <button type="button" class="btn btn-elegant waves-light" mdbWavesEffect (click)="playOrPause()" style="border-radius: 50px">{{btnName}}</button>
+        <button type="button" class="btn btn-elegant waves-light" mdbWavesEffect (click)="stop()" style="border-radius: 50px">Stop</button>
+    </div>
+
+    <div *ngIf="!toggleCtrls" class="col-md-8 pt-4">
+        <a routerLinkActive="active" [routerLink]="['/creator',song.creator]" class="card-link">Creator: {{song.creator}}</a>
+        <a class="card-link float-right">Uploaded on: {{song['upload-date']}}</a>
+        <a class="card-link float-right">Likes: {{song.likes}} </a>
+    </div>
+
+
+    <!--Mid screen controlls-->
+    <div *ngIf="toggleCtrls" class="pt-2 col-8">
+        <button type="button" class="btn btn-sm btn-elegant waves-light btn-block" mdbWavesEffect style="border-radius: 50px" (click)="playOrPause()">{{btnName}}</button>
+
+    </div>
+    <div *ngIf="toggleCtrls" class="pt-2 col-4">
+        <button type="button" class="btn btn-sm btn-elegant waves-light btn-block" mdbWavesEffect style="border-radius: 50px" (click)="stop()">Stop</button>
+    </div>
+
+    <div *ngIf="toggleCtrls" class="pt-2 pl-3 col-md-4">
+        <a routerLinkActive="active" [routerLink]="['/creator',song.creator]" class="card-link">Creator: {{song.creator}}</a>
+    </div>
+    <div *ngIf="toggleCtrls" class="pt-2 col-md-4">
+        <a class="card-link">Uploaded on: {{song['upload-date']}}</a>
+    </div>
+    <div *ngIf="toggleCtrls" class="pt-2 pr-3 col-md-4">
+        <a *ngIf="!floatRight" class="card-link">Likes: {{song.likes}} </a>
+        <a *ngIf="floatRight" class="card-link float-right">Likes: {{song.likes}} </a>
+    </div>
+</div>
+
+
+
+<!-- Remove song modal -->
+<div mdbModal #removeSong="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="removeSong" aria-hidden="true"
+    [config]="{backdrop: false, ignoreBackdropClick: true}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="removeSong.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title w-100" id="myModalLabel">Are you sure you want to do this?</h4>
+            </div>
+            <form [formGroup]="form" (ngSubmit)="remove()">
+
+                <div class="modal-body">
+                    <p>This action
+                        <strong>CANNOT</strong> be undone. This will delete the
+                        <strong>{{song.name}}</strong> song permanently.</p>
+                    <p>Please type in the name of the song to confirm.</p>
+                    <input type="text" class="form-control" (change)="matchValidator($event)" name="username" id="username" formControlName="confirmation">
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" [disabled]="!form.valid" (click)="removeSong.hide()" class="btn btn-block btn-default waves-light" mdbWavesEffect
+                        value="Remove">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Report song modal-->
+<div mdbModal #reportSong="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="reportSong" aria-hidden="true"
+    [config]="{backdrop: false, ignoreBackdropClick: true}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div *ngIf="!isReported" class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="reportSong.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title w-100" id="reportSongLabel">Does this song sound to familiar?</h4>
+            </div>
+            <div *ngIf="isReported" class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="reportSong.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title w-100" id="reportSongLabel">Does this song sound to familiar?</h4>
+            </div>
+
+            <form [formGroup]="form2" (ngSubmit)="report()">
+                <div *ngIf="!isReported" class="modal-body">
+                    <p>Could you plese provide some explanation for this action?</p>
+                    <textarea style="height: 100%;" class="form-control" id="about" rows="3" formControlName="reason"></textarea>
+                </div>
+                <div *ngIf="isReported" class="modal-body">
+                    <p class="mt-4 animated slideInLeft">Your report is successfully sent!</p>
+                </div>
+                <div class="modal-footer">
+                    <input *ngIf="!isReported" type="submit" [disabled]="!form2.valid" class="btn btn-block btn-default waves-light" mdbWavesEffect
+                        value="Report">
+                    <input *ngIf="isReported" type="button" [disabled]="!form2.valid" (click)="reportSong.hide()" class="btn btn-block btn-default waves-light"
+                        mdbWavesEffect value="Ok">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

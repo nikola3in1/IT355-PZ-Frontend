@@ -1,0 +1,15 @@
+.form-group{
+    margin-bottom: 2px;
+}
+.navbar-nav>li{
+    border-right: 1px solid grey;
+  }
+.navbar-nav>li:last-child{
+    border: none;
+}
+
+@media (max-width: 992px) {
+    .navbar-nav>li{
+        border: none;
+      }
+  }

@@ -1,0 +1,17 @@
+<div *ngIf="isCollapsed" class="view img">
+  <img src="../../assets/background3.jpg" class="img-fluid">
+  <div class="mask pattern-7 text-center">
+    <br/>
+    <br/>
+    <div *ngIf="isCollapsed" class="search align-middle">
+      <h2 class="h2-responsive mx-auto text-center text-white " [ngStyle]="textStyle">Find a song that suits your needs.</h2>
+      <div class="mt-5 ml-auto mr-auto">
+        <app-search-bar></app-search-bar>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="!isCollapsed" class="container mt-3">
+    <h1 >Welcome to MusicBox</h1>
+    <lead>Find a song that suits your needs</lead>
+</div>

@@ -1,0 +1,28 @@
+<app-navbar></app-navbar>
+<div class="container mt-2 page">
+    <div class="row">
+        <div class="col">
+            <input type="button" (click)="toggleReports()" class="btn btn-block btn-default waves-light" mdbWavesEffect value="Reports">
+        </div>
+        <div class="col">
+            <input type="button" (click)="toggleGenres()" class="btn btn-block btn-default waves-light" mdbWavesEffect value="Add genre">
+        </div>
+        <div class="col">
+            <input type="button" (click)="toggleRemove()" class="btn btn-block btn-default waves-light" mdbWavesEffect value="Remove genre">
+        </div>
+    </div>
+    <div *ngIf="report">
+        <h3 class='mt-3'>Review user reports</h3>
+        <app-admin-report></app-admin-report>
+    </div>
+    <div *ngIf="addGenre">
+        <h3 class='mt-3'>Add new genre</h3>
+        <app-admin-genre></app-admin-genre>
+    </div>
+    <div *ngIf="remove">
+        <h3 class='mt-3'>Remove genre</h3>
+        <app-admin-remove></app-admin-remove>
+    </div>
+
+</div>
+<app-footer></app-footer>

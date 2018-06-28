@@ -1,0 +1,28 @@
+
+@media screen and (min-width: 1500px) {
+    .personalize{
+        width: 30% !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .personalize{
+        width: 100% !important;
+    }
+}
+@media screen and (max-width: 992px) and (min-width: 768px) {
+    .personalize{
+        width: 80% !important;
+    }
+}
+
+@media screen and (max-width: 1200px) and (min-width: 992px) {
+    .personalize{
+        width: 50% !important;
+    }
+}
+@media screen and (max-width: 1500px) and (min-width: 1200px) {
+    .personalize{
+        width: 40% !important;
+    }
+}

@@ -1,0 +1,31 @@
+<app-navbar></app-navbar>
+<div class="container mt-5 personalize page">
+
+  <h2 class="h2-responsive text-center">Members Sign in</h2>
+  <p class="text-center">Not a member yet?
+    <a routerLinkActive="active" routerLink='/register/'>
+      <u>Sign up now</u>
+    </a>
+  </p>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <small class="pt-3 float-right" *ngIf="username.errors?.minlength">Username must be at least 4 characters long.</small>
+      <input type="text" class="form-control" name="username" id="username" formControlName="username">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <small class="pt-3 float-right" *ngIf="password.errors?.minlength">Password must be at least 8 characters long.</small>
+      <input type="password" class="form-control" formControlName="password" name="password" id="password">
+    </div>
+    <div class="text-center">
+      <input type="submit" [disabled]="!form.valid" class="btn btn-block btn-default waves-light" mdbWavesEffect value="Login">
+    </div>
+    <div class="mt-2 float-right">
+      <a>Forgot password</a>
+    </div>
+  </form>
+</div>
+
+<app-footer></app-footer>

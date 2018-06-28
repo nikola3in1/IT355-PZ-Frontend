@@ -1,0 +1,13 @@
+<app-navbar></app-navbar>
+<div class="container page">
+  <h2 class="mt-4 h2-responsive">List of all genres and categories on the platform</h2>
+  <div class="row mt-5">
+      <div *ngFor="let genre of genreList" class="col-sm-6 col-6 col-md-3">
+        <h5 class="h5-responsive txt text-center">
+          <a routerLinkActive="active" routerLink='/genre/{{genre}}'>{{genre}}</a>
+        </h5>
+      </div>
+    </div>
+</div>
+<app-search-bar></app-search-bar>
+<app-footer></app-footer>

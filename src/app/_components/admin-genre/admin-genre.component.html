@@ -1,0 +1,20 @@
+<div class="container">
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="name">Name of the new genre</label>
+        <input type="text" class="form-control" id="name" formControlName="name">
+      </div>
+      <div class="form-group" style="width: 100%">
+        <label for="about">Say something about this genre.</label>
+        <textarea class="form-control " style="width: 100%" id="about" rows="3" formControlName="about"></textarea>
+      </div>
+    </div>
+    <div class="form-row">
+      <button [disabled]="!form.valid" class="btn btn-block btn-default waves-light">Add genre!</button>
+    </div>
+  </form>
+  <h2 class="mt-4 animated slideInLeft" *ngIf="status">New genre is successfully added!</h2>
+
+</div>

@@ -1,0 +1,47 @@
+<app-navbar ></app-navbar>
+<div class="container page" >
+    <div class="mt-4 card">
+        <a routerLinkActive="active" [routerLink]="['/profile/edit']">
+            <i class="fa fa-cog fa-lg float-right pt-3 pr-3"></i>
+        </a>
+        <div class="row">
+            <div class="col-lg-2 col-md-12 pb-4 pl-5 mx-auto">
+                <img alt='' class='card-img-profile img-responsive' style="margin: 0 auto" [src]='url'>
+            </div>
+            <div class="col-lg-10 pr-4  details">
+                <div class="ml-3">
+                    <h2>{{firstname | titlecase}} {{lastname | titlecase}} - {{username}}</h2>
+                    <div class="mb-1 pr-4">
+                        <hr> Bio:
+                        <em> {{about}} </em>
+                    </div>
+                    <div>
+                        <div class="row pt-5">
+                            <div class="col-sm-12 col-lg-6">
+                                <p class="pr-4">Earned: {{earned | currency:'USD'}}</p>
+                            </div>
+                            <div *ngIf="phoneProfile" class="col-sm-12 col-lg-6">
+                                <p>Number of songs on platform: {{nrSongs}}</p>
+                            </div>
+                            <div *ngIf="!phoneProfile" class="col-sm-12 col-lg-6 pr-4 text-right">
+                                <p>Number of songs on platform: {{nrSongs}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <h1 class="mt-4">My songs</h1>
+    <div *ngIf="gotSongs" class="pt-4">
+        <div *ngFor="let song of songs" class="card card-body mb-2">
+            <app-audio [isMine]="true" (deleted)="reload()" [song]="song"></app-audio>
+        </div>
+    </div>
+    <p class="text-center" *ngIf="!gotSongs">
+        Ooops, no songs. Upload now!
+    </p>
+
+</div>
+<app-footer [isSticky]="false"></app-footer>
