@@ -1,17 +1,17 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ContentService } from '../../_services/content.service';
 
-declare let paypal : any;
+declare let paypal: any;
 
 @Component({
   selector: 'app-paypal',
   templateUrl: './paypal.component.html',
   styleUrls: ['./paypal.component.scss']
 })
-export class PaypalComponent implements OnInit{
+export class PaypalComponent implements OnInit {
 
-  constructor( private fb: FormBuilder, private content: ContentService) { }
+  constructor(private fb: FormBuilder, private content: ContentService) { }
   form: FormGroup;
   @Input() name = "";
   @Input() creator = "";
@@ -20,17 +20,18 @@ export class PaypalComponent implements OnInit{
   @Input() nrSales;
   @Input() price;
   @Input() genre = "Rock";
-  bought:boolean=false;
+  bought: boolean = false;
   ngOnInit() {
-
     this.form = this.fb.group({
       confirmation: new FormControl("", Validators.required),
     });
   }
-  buy(){
-    this.content.buy(this.name,this.creator).subscribe(data=>{
-      if(data.success){
-        this.bought=true;
+  buy() {
+    let paypalEmail =  (<HTMLInputElement>document.getElementById("paypalEmail")).value;
+    this.content.buy(this.name, this.creator,paypalEmail).subscribe(data => {
+      if (data.success) {
+        this.bought = true;
+        window.open("http://localhost:3131/download?k=" + data.k)
       }
     });
   }

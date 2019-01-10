@@ -33,33 +33,31 @@ export class CreatorComponent implements OnInit {
         // console.log(this.auth.getUsername,params.creator,this.auth.isLoggedIn);
         this.router.navigate(['profile']);
       } else {
-        this.content.getCreatorDetails(params.creator).subscribe(data => {
-          //If exists
-          if(data){
-            //Get songs
-            this.content.getIp().then((data: any) => {
-              this.content.getByCreator(params.creator,data.ip).subscribe(data2 => {
-                if (data2.songs.length > 0) {
-                  this.songs = data2.songs;
-                  this.gotSongs = true;
-                  this.isDeleted = false;
-                }
-              });
-            });
-            //Set details
-            this.url = "http://localhost/IT255-PZ-Backend/" + data.slika;
-            this.about = data.about;
-            this.nrSongs = data.brPesama;
-            this.firstname = data.ime;
-            this.lastname = data.prezime;
-            this.username = params.creator;
-            console.log(data, 'user details');
-            this.isDeleted = false;
-          }else{
-            this.isDeleted=true;
-          }
-        });
+        this.reload(params.creator);
+      }
+    });
+  }
 
+  reload(creator) {
+    this.content.getCreatorDetails(creator).subscribe(data => {
+      //If exists
+      if (data) {
+        //Set details
+        this.songs = data.songs;
+        this.isDeleted = false;
+        this.gotSongs = true;
+        this.url = "http://localhost:3131/rest/content/resource?p=" + data.slika;
+        this.about = data.about;
+        if(data.songs !=null){
+          this.nrSongs = data.songs.length;
+          this.gotSongs=false;
+        }
+        this.firstname = data.ime;
+        this.lastname = data.prezime;
+        this.username = creator;
+        console.log(this.songs)
+      } else {
+        this.isDeleted = true;
       }
     });
   }

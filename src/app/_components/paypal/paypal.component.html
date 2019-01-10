@@ -6,8 +6,8 @@
 </form>
 
 
-<div mdbModal #checkout="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="checkout" aria-hidden="true"
-  [config]="{backdrop: false, ignoreBackdropClick: true}">
+<div mdbModal #checkout="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="checkout"
+  aria-hidden="true" [config]="{backdrop: false, ignoreBackdropClick: true}">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -19,26 +19,34 @@
 
 
       <div *ngIf="!bought">
-          <div class="ml-4 mt-3">
-              <p>Song: {{name}}</p>
-              <p>Creator: {{creator}}</p>
-              <p>Genre: {{genre | titlecase}}</p>
-              <p>Duration: {{duration}}</p>
-              <p>Price: {{price|currency}}</p>
-            </div>
+        <div class="ml-4 mt-3">
+          <p>Song: {{name}}</p>
+          <p>Creator: {{creator}}</p>
+          <p>Genre: {{genre | titlecase}}</p>
+          <p>Duration: {{duration}}</p>
+          <p>Price: {{price|currency}}</p>
+          <p>Paypal email:</p>
+          <div class="mr-4 mb-2">
+            <input type="text" class="form-control" id="paypalEmail">
+          </div>
+        </div>
       </div>
-      <div *ngIf="bought"> 
+
+      <div *ngIf="bought">
         <br>
-          <h2 class="text-center animated fadeIn">Song bought successfuly!</h2>
+        <h2 class="text-center animated fadeIn">Song bought successfuly!</h2>
         <br>
 
       </div>
-      <div *ngIf="!bought"class="modal-footer">
+
+
+      <div *ngIf="!bought" class="modal-footer">
         <input type="submit" (click)="buy()" class="btn btn-block btn-default waves-light" mdbWavesEffect value="Buy">
       </div>
-      <div *ngIf="bought"class="modal-footer">
-          <input type="submit" (click)="checkout.hide()" class="btn btn-block btn-default waves-light" mdbWavesEffect value="Ok">
-        </div>
+      <div *ngIf="bought" class="modal-footer">
+        <input type="submit" (click)="checkout.hide()" class="btn btn-block btn-default waves-light" mdbWavesEffect
+          value="Ok">
+      </div>
     </div>
   </div>
 </div>

@@ -25,13 +25,16 @@ export class SearchResultComponent implements OnInit {
       this.content.search(params.query).subscribe(data => {
         console.log(data, 'search data');
         if (data.creators.length > 0) {
-          console.log(data.creators[0].creator, 'cre');
           this.creators = data.creators;
           this.gotCreators = true;
         }
         if (data.songs.length > 0) {
           this.songs = data.songs;
           this.gotSongs = true;
+        }
+        if (this.creators.length == 0 && this.songs.length == 0) {
+          this.gotSongs = false;
+          this.gotCreators = false;
         }
       });
     });

@@ -64,7 +64,7 @@ export class UserService {
 
   auth() {
     console.log('called');
-    return this.http.get<myData>('http://localhost/IT255-PZ-Backend/user.php', { withCredentials: true })
+    return this.http.get<myData>('http://localhost:3131/user', { withCredentials: true })
   }
 
 }

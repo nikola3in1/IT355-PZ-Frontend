@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -45,88 +45,65 @@ interface ip {
 export class ContentService {
 
   constructor(private http: HttpClient) { }
-  getIp() {
-    return new Promise((resolve, reject) => {
-      var path = 'http://ipv4.myexternalip.com/json';
-      this.http.get(path).subscribe((data) => {
-        resolve(data)
-      });
-    });
-  }
+
   getGenreList(limit) {
-    if (limit) {
-      const body = {
-        'limit': limit
-      }
-      return this.http.post<any>('http://localhost/IT255-PZ-Backend/getGenreList.php', body);
+    const body = {
+      'limit': limit
     }
-    return this.http.get<any>('http://localhost/IT255-PZ-Backend/getGenreList.php');
+    return this.http.post<any>('http://localhost:3131/rest/content/genres', body);
   }
 
   search(query) {
     const body = {
       'query': query
     }
-    return this.http.post<any>('http://localhost/IT255-PZ-Backend/search.php', body);
+    return this.http.post<any>('http://localhost:3131/rest/content/search', body);
   }
-  getTop5(ip) {
-    const body = {
-      'ip': ip
-    }
-    console.log(body, "we got ip2");
-    return this.http.post<songs>('http://localhost/IT255-PZ-Backend/getTop5.php', body);
+  getTop5() {
+    return this.http.get<songs>('http://localhost:3131/rest/content/getTop5',{withCredentials:true});
   }
 
-  getByCreator(creator, ip) {
-    const body = {
-      'creator': creator,
-      'ip': ip
-    }
-    return this.http.post<songs>('http://localhost/IT255-PZ-Backend/getSongs.php', body, { withCredentials: true });
+  getByCreator(creator) {
+    let params = new HttpParams();
+    params = params.append("creator", creator);
+    return this.http.get<songs>('http://localhost:3131/rest/content/songs', { params, withCredentials: true });
   }
 
-  getGenres() {
-    return this.http.get<any>('http://localhost/IT255-PZ-Backend/getGenres.php', { withCredentials: true });
+  getByGenre(genre) {
+    let params = new HttpParams();
+    params = params.append("genre", genre);
+    return this.http.get<songs>('http://localhost:3131/rest/content/songs', { params: params, withCredentials: true });
   }
 
-  getByGenre(genre, ip) {
-    const body = {
-      'genre': genre,
-      'ip': ip
-    }
-    console.log(body, "we got ip2");
-    return this.http.post<songs>('http://localhost/IT255-PZ-Backend/getSongs.php', body, { withCredentials: true });
+  getSong(creator, name) {
+    let params = new HttpParams();
+    params = params.append("creator",creator);
+    params = params.append("songName",name);
+    // console.log(body, "service");
+    return this.http.get<song>('http://localhost:3131/rest/content/song', { params: params,withCredentials: true });
   }
 
-  getSong(creator, name, ip) {
-    const body = {
-      'creator': creator,
-      'songName': name,
-      'ip': ip
-    }
-    console.log(body, "service");
-    return this.http.post<song>('http://localhost/IT255-PZ-Backend/getSong.php', body, { withCredentials: true });
-  }
-
-  likeSong(songName, ip) {
+  likeSong(songName,creator) {
     const body = {
       'songName': songName,
-      'ip': ip
+      'creator':creator
     }
-    return this.http.post<like>('http://localhost/IT255-PZ-Backend/likeSong.php', body, { withCredentials: true });
+    return this.http.post<like>('http://localhost:3131/rest/user/like', body, { withCredentials: true });
   }
 
   getCreatorDetails(creator) {
     const body = {
       'creator': creator
     }
-    return this.http.post<any>('http://localhost/IT255-PZ-Backend/getCreator.php', body);
+    return this.http.post<any>('http://localhost:3131/rest/content/profile', body, { withCredentials: true });
   }
-  buy(songname,creator){
-    const body={
-      'songname':songname,
-      'creator':creator
+  buy(songname, creator,paypalEmail) {
+    const body = {
+      'songName': songname,
+      'creator': creator,
+      'paypalEmail': paypalEmail
     }
-    return this.http.post<any>('http://localhost/IT255-PZ-Backend/buySong.php', body);
+    return this.http.post<any>('http://localhost:3131/rest/content/buy', body);
   }
 }
+

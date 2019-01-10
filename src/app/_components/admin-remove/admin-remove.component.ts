@@ -19,8 +19,8 @@ export class AdminRemoveComponent implements OnInit {
   }
 
   loadGenres(){
-    this.content.getGenres().subscribe(data => {
-      this.genres = data.genres;
+    this.content.getGenreList(-1).subscribe(genres => {
+      this.genres = genres;
     });
   }
 

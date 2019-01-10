@@ -21,8 +21,7 @@ export class AuthService {
     this.setLoggedIn(false);
     this.setIsAdmin(false);
     this.setUsername(null);
-    console.log(this.isAdmin);
-    return this.http.get<any>('http://localhost/IT255-PZ-Backend/logout.php',{withCredentials:true});
+    return this.http.get<any>('http://localhost:3131/logout',{withCredentials:true});
   }
 
   setLoggedIn(value:boolean){
@@ -56,18 +55,16 @@ export class AuthService {
   // headers = new HttpHeaders({ 'content-type': 'application/x-www-form-urlencoded'});  
   getUserDetails(username,password){
     //post these to API server return user info if correct
-    const body = {
-      username,
-      password,
-    };
-
-    return this.http.post<myData>('http://localhost/IT255-PZ-Backend/login.php',body,{
-      withCredentials:true
+   
+    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username+":"+password) });
+    return this.http.get<myData>('http://localhost:3131/login',{
+      withCredentials:true,
+      headers:headers
     });
   }
 
   getCreatorDetails(){
-    return this.http.get<any>('http://localhost/IT255-PZ-Backend/getProfile.php',{withCredentials:true});
+    return this.http.get<any>('http://localhost:3131/rest/user/profile',{withCredentials:true});
   }
 
   signUp(username,password,email,firstname,lastname){
@@ -78,13 +75,13 @@ export class AuthService {
       firstname,
       lastname
     }
-    return this.http.post<any>('http://localhost/IT255-PZ-Backend/register.php',body,{withCredentials:true});
+    return this.http.post<any>('http://localhost:3131/register',body,{withCredentials:true});
   }
 
   editProfile(body){
     const headers = new HttpHeaders().set('Content-Type', []);
 
-    return this.http.post<any>('http://localhost/IT255-PZ-Backend/editProfile.php',body,{
+    return this.http.post<any>('http://localhost:3131/rest/user/updateProfile',body,{
       reportProgress:true,
       headers:headers,
       observe: 'events',
@@ -95,7 +92,7 @@ export class AuthService {
   uploadSong(body){
     const headers = new HttpHeaders().set('Content-Type', []);
 
-    return this.http.post<any>('http://localhost/IT255-PZ-Backend/upload.php',body,{
+    return this.http.post<any>('http://localhost:3131/rest/user/upload',body,{
       reportProgress:true,
       headers:headers,
       observe: 'events',
@@ -103,42 +100,49 @@ export class AuthService {
     });
   }
   
-  deleteSong(songname,creator){
+  deleteSong(songname){
     const body={
-      'songname':songname,
-      'creator':creator
+      'songname':songname
     }
     console.log(body,'body');
 
-    return this.http.post<any>('http://localhost/IT255-PZ-Backend/deleteSong.php',body,{withCredentials:true});
+    return this.http.post<any>('http://localhost:3131/rest/user/deleteSong',body,{withCredentials:true});
+  }
+
+
+  deleteSongAdmin(creator,songname){
+    const body={
+      'creator': creator,
+      'songName':songname
+    }
+    return this.http.post<any>('http://localhost:3131/rest/admin/deleteSong',body,{withCredentials:true});
   }
 
   deleteReport(id){
     const body={
       'reportid':id
     }
-    return this.http.post<any>('http://localhost/IT255-PZ-Backend/deleteReport.php',body,{withCredentials:true});
+    return this.http.post<any>('http://localhost:3131/rest/admin/deleteReport',body,{withCredentials:true});
   }
 
   deleteCreator(creator){
     const body={
       'creator':creator
     }
-    return this.http.post<any>('http://localhost/IT255-PZ-Backend/deleteCreator.php',body,{withCredentials:true});
+    return this.http.post<any>('http://localhost:3131/rest/admin/deleteCreator',body,{withCredentials:true});
   }
 
-  reportSong(reason,creator,songname,reportedBy){
+  reportSong(reason,creator,songname){
     const body={
       'reason':reason,
       'songname':songname,
-      'creator':creator,
-      'reportedBy':reportedBy
+      'creator':creator
     }
-    return this.http.post<any>('http://localhost/IT255-PZ-Backend/report.php',body,{withCredentials:true});
+    return this.http.post<any>('http://localhost:3131/rest/user/report',body,{withCredentials:true});
   }
 
   getReports(){
-    return this.http.get<any>('http://localhost/IT255-PZ-Backend/getReports.php',{withCredentials:true});
+    return this.http.get<any>('http://localhost:3131/rest/admin/reports',{withCredentials:true});
   }
 
   addGenre(name,about){
@@ -146,14 +150,14 @@ export class AuthService {
       name,
       about
     }
-    return this.http.post<any>('http://localhost/IT255-PZ-Backend/addGenre.php',body,{withCredentials:true});
+    return this.http.post<any>('http://localhost:3131/rest/admin/addGenre',body,{withCredentials:true});
   }
 
   removeGenre(name){
     const body={
       name,
     }
-    return this.http.post<any>('http://localhost/IT255-PZ-Backend/deleteGenre.php',body,{withCredentials:true});
+    return this.http.post<any>('http://localhost:3131/rest/admin/deleteGenre',body,{withCredentials:true});
   }
 
 }

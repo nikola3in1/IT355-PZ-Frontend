@@ -21,15 +21,16 @@ export class GenreComponent implements OnInit {
     //Uzimamo parametre iz rute
     this.route.params.subscribe(params =>{
       //Uzimamo ip korisnika
-      this.content.getIp().then((data:any)=>{
+      // this.content.getIp().then((data:any)=>{
         //Uzimamo zanrove
-        this.content.getByGenre(params.genre,data.ip).subscribe(data=>{
+        this.content.getByGenre(params.genre).subscribe(data=>{
+          console.log(params.genre,data)
           if(data.songs.length>0){
             this.songs=data.songs;
             this.gotSongs=true;
           }
         });
-      });
+      // });
       this.genreName=params.genre;
     });
   }

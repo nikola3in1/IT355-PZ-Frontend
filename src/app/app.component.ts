@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ContentService } from './_services/content.service';
 import { UserService } from './_services/user.service';
 import { AuthService } from './_services/auth.service';
 
@@ -10,10 +9,15 @@ import { AuthService } from './_services/auth.service';
 })
 export class AppComponent {
   title = 'app';
-  constructor(content : ContentService, private user : AuthService, private auth: UserService){
-    if(user.isLoggedIn){
-    auth.isLogged('user');
-    }
-    content.getIp();
+  constructor(private user : AuthService, private auth: UserService){
+    // if(user.isLoggedIn){
+    //   auth.isLogged('user');
+    // }
+    this.auth.auth().subscribe(data=>{
+      console.log(data, " Data");
+      if(!data.success){
+        user.logout();
+      }
+    })
   }
 }

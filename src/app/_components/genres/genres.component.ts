@@ -6,13 +6,14 @@ import { ContentService } from '../../_services/content.service';
   styleUrls: ['./genres.component.scss']
 })
 export class GenresComponent implements OnInit {
-  genreList = ["rnb","corporate","electronica",'classical','jazz','rock','pop','metal','djent','folk','dnb','country'];
-
+  // genreList = ["rnb","corporate","electronica",'classical','jazz','rock','pop','metal','djent','folk','dnb','country'];
+  genreList=[]
   constructor(private content: ContentService ) { }
 
   ngOnInit() {
     this.content.getGenreList(12).subscribe(data=>{
       if(data){
+        console.log(data, " genres data")
         this.genreList=data;
       }
     });

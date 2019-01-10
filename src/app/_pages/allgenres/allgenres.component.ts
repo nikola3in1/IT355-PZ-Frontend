@@ -15,6 +15,7 @@ export class AllgenresComponent implements OnInit {
   ngOnInit() {
     this.content.getGenreList(null).subscribe(data=>{
       if(data){
+        console.log(data);
         this.genreList=data;
       }
     });

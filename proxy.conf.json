@@ -1,0 +1,8 @@
+{
+    "/IT255-PZ-Backend": {
+    "target": "http://localhost/",
+     "secure": false,
+     "changeOrigin": true,
+     "logLevel": "info"
+    }
+}

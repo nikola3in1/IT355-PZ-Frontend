@@ -34,7 +34,7 @@
   <h1 class="mt-4">Songs</h1>
   <div *ngIf="gotSongs" class="pt-4">
     <div *ngFor="let song of songs" class="card card-body mb-2">
-      <app-audio [song]="song"></app-audio>
+      <app-audio (deleted)="reload()" [song]="song"></app-audio>
     </div>
   </div>
   <p class="text-center" *ngIf="!gotSongs">

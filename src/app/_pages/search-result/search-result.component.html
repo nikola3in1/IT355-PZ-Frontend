@@ -21,8 +21,8 @@
     <div *ngIf="gotSongs" class="ml-4 animated slideInLeft">
         <div *ngFor="let s of songs">
             <h3>Song:
-                <a routerLinkActive="active" [routerLink]="['/creator',s.creator,s.song]">
-                    {{s.song}}
+                <a routerLinkActive="active" [routerLink]="['/creator',s.creator,s.name]">
+                    {{s.name}}
                 </a>
                 by {{s.creator}}
             </h3>

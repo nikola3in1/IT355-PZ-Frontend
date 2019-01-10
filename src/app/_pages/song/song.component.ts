@@ -23,8 +23,7 @@ export class SongComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private content: ContentService, private router: Router) {
     this.route.params.subscribe(params => {
-      this.content.getIp().then((data: any) => {
-        this.content.getSong(params.creator, params.songName, data.ip).subscribe(data => {
+        this.content.getSong(params.creator, params.songName).subscribe(data => {
           console.log(data, "song data");
           if (data) {
             this.songs[0] = data;
@@ -39,7 +38,6 @@ export class SongComponent implements OnInit {
             this.isDeleted = true;
           }
         });
-      });
     });
   }
   calcDuration(duration) {

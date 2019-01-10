@@ -1,7 +1,7 @@
-<a *ngIf="!isMine && !isAdmin" class="card-link" title="">
-    <i *ngIf="isLiked" (click)="like()" class="fa fa-heart like fa-lg  float-right ml-1" [ngStyle]='likeStyle'></i>
-    <i *ngIf="!isLiked " (click)="like()" class="fa fa-heart-o fa-lg  float-right ml-1"></i>
-    <i *ngIf="isCreator" (click)="reportSong.show()" class="fa fa-exclamation-circle fa-lg float-right" style="color:#2E2E2E"
+<a *ngIf="!isMine && !isAdmin && isCreator" class="card-link" title="">
+    <i *ngIf="isLiked " (click)="like()" class="fa fa-heart like fa-lg  float-right ml-1" [ngStyle]='likeStyle'></i>
+    <i *ngIf="!isLiked" (click)="like()" class="fa fa-heart-o fa-lg  float-right ml-1"></i>
+    <i (click)="reportSong.show()" class="fa fa-exclamation-circle fa-lg float-right" style="color:#2E2E2E"
         aria-hidden="true"></i>
 </a>
 <a *ngIf="isAdmin" class="card-link" title="">

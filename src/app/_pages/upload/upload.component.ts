@@ -30,8 +30,8 @@ export class UploadComponent implements OnInit {
 
   constructor(private Auth: AuthService, private user: UserService, private fb: FormBuilder, private content: ContentService) {
     user.authPath("user","upload");
-    this.content.getGenres().subscribe(data => {
-      this.genres = data.genres;
+    this.content.getGenreList(-1).subscribe(genres=> {
+      this.genres = genres;
     });
   }
 
@@ -104,7 +104,7 @@ export class UploadComponent implements OnInit {
           console.log(event, "progress");
         } else if (event.type === HttpEventType.Response) {
           console.log(event, "response");
-          if (event.body.status.success) {
+          if (event.body.success) {
             //show msg
             this.uploaded=true;
           }

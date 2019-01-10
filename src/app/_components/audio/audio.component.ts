@@ -26,7 +26,7 @@ export class AudioComponent implements OnInit, AfterViewInit {
 
   isMine: boolean = false;
   isCreator: boolean = false;
-  isAdmin: boolean=false;
+  isAdmin: boolean = false;
 
   closeResult: string;
 
@@ -39,7 +39,7 @@ export class AudioComponent implements OnInit, AfterViewInit {
   public isLoaded = true;
 
   //temp vars
-  public isReported=false;
+  public isReported = false;
 
 
   //Player controls and adjustments 
@@ -86,10 +86,10 @@ export class AudioComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
-    if(this.auth.isLoggedIn){
-      this.isCreator=true;
-    }else if(this.auth.isAdmin){
-      this.isAdmin=true;
+    if (this.auth.isLoggedIn) {
+      this.isCreator = true;
+    } else if (this.auth.isAdmin) {
+      this.isAdmin = true;
       console.log('admin is logged');
     }
 
@@ -115,7 +115,7 @@ export class AudioComponent implements OnInit, AfterViewInit {
         waveColor: this.linGrad,
       });
 
-      this.wavesurfer.load("http://localhost/IT255-PZ-Backend/" + this.song.path);
+      this.wavesurfer.load("http://localhost:3131/rest/content/resource?p=" + this.song.path);
 
       this.wavesurfer.on('ready', () => {
         this.isLoaded = true;
@@ -174,12 +174,9 @@ export class AudioComponent implements OnInit, AfterViewInit {
 
   like() {
     this.isLiked = !this.isLiked;
-    this.content.getIp()
-      .then((data: any) => {
-        this.content.likeSong(this.song.name, data.ip).subscribe(status => {
-          console.log(status, "like song");
-        });
-      });
+    this.content.likeSong(this.song.name, this.song.creator).subscribe(status => {
+      console.log(status, "like song");
+    });
   }
 
   matchValidator(event) {
@@ -194,24 +191,32 @@ export class AudioComponent implements OnInit, AfterViewInit {
 
 
   remove() {
-    this.auth.deleteSong(this.song.name, this.song.creator).subscribe(data => {
-      console.log(data, 'data from srv delete');
-      if (data.success) {
-        this.deleted.emit(true);
-      }
-    })
+    if (this.isAdmin) {
+      this.auth.deleteSongAdmin(this.song.creator, this.song.name).subscribe(data => {
+        if (data.success) {
+          this.deleted.emit(true);
+        }
+      })
+    } else if (this.isCreator) {
+      this.auth.deleteSong(this.song.name).subscribe(data => {
+        console.log(data, 'data from srv delete');
+        if (data.success) {
+          this.deleted.emit(true);
+        }
+      })
+    }
   }
 
-  report(){
+  report() {
     const songname = this.song.name;
-    const creator = this.song.creator; 
+    const creator = this.song.creator;
     const reason = this.form2.value['reason'];
-    const reportedBy = this.auth.getUsername;
-    this.auth.reportSong(reason,creator,songname,reportedBy).subscribe(data=>{
-      console.log(data,'data from srv reported')
+    // const reportedBy = this.auth.getUsername;
+    this.auth.reportSong(reason, creator, songname).subscribe(data => {
+      console.log(data, 'data from srv reported')
       if (data.success) {
-        console.log(data,'reported')
-        this.isReported=true;
+        console.log(data, 'reported')
+        this.isReported = true;
       }
     })
   }

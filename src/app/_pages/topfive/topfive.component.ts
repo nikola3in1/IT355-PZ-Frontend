@@ -13,13 +13,13 @@ export class TopfiveComponent implements OnInit {
   constructor(private content: ContentService) { }
 
   ngOnInit() {
-    this.content.getIp().then((data: any) => {
+    // this.content.getIp().then((data: any) => {
       //Uzimamo zanrove
-      this.content.getTop5(data.ip).subscribe(data => {
-        console.log(data);
+      this.content.getTop5().subscribe(data => {
         this.songs = data.songs;
+        console.log(data,"songs");
       });
-    });
+    // });
   }
 
 }
